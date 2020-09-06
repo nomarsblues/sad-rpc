@@ -1,4 +1,4 @@
-package com.aperture.sadrpc.proxy;
+package com.aperture.sadrpc.client;
 
 import com.aperture.sadrpc.request.RpcRequest;
 import com.aperture.sadrpc.response.RpcResponse;

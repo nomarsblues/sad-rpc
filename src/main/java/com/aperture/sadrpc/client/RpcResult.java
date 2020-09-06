@@ -1,4 +1,4 @@
-package com.aperture.sadrpc.proxy;
+package com.aperture.sadrpc.client;
 
 
 import com.aperture.sadrpc.response.RpcResponse;
@@ -17,7 +17,9 @@ public class RpcResult {
     public static RpcResponse get(String requestId) {
         CompletableFuture<RpcResponse> future = result.get(requestId);
         try {
-            return future.get();
+            RpcResponse response = future.get();
+            result.remove(requestId);
+            return response;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

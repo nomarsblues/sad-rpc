@@ -1,6 +1,5 @@
 package com.aperture.sadrpc.serialize;
 
-import com.aperture.sadrpc.request.RpcRequest;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -33,7 +32,7 @@ public class RpcDecoder extends ByteToMessageDecoder {
         byte[] data = new byte[dataLength];
         in.readBytes(data);
 
-        Object obj = serialization.deSerialize(data, RpcRequest.class);
+        Object obj = serialization.deSerialize(data, clz);
         out.add(obj);
     }
 }
