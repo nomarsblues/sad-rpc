@@ -18,7 +18,6 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 public class NettyClient {
     private String ip;
     private Integer port;
-    private ClientHandler handler = new ClientHandler();
 
     public NettyClient(String ip, Integer port) {
         this.ip = ip;
@@ -36,7 +35,7 @@ public class NettyClient {
                                 .addLast(new LengthFieldBasedFrameDecoder(65535,0,4))
                                 .addLast(new RpcEncoder(RpcRequest.class, new JsonSerialization()))
                                 .addLast(new RpcDecoder(RpcResponse.class, new JsonSerialization()))
-                                .addLast(handler);
+                                .addLast(new ClientHandler());
                     }
 
                 }).option(ChannelOption.SO_KEEPALIVE, true);
