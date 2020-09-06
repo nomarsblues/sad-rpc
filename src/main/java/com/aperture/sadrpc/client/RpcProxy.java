@@ -9,7 +9,7 @@ import java.util.UUID;
 public class RpcProxy {
 
     @SuppressWarnings("unchecked")
-    public static <T> T create(Class<?> clz, String provider) {
+    public static <T> T create(Class<?> clz) {
         return (T) Proxy.newProxyInstance(clz.getClassLoader(), new Class<?>[]{clz},
                 (proxy, method, args) -> {
                     RpcRequest request = new RpcRequest();
