@@ -14,7 +14,9 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class NettyServer {
     private int port;
 
@@ -43,7 +45,7 @@ public class NettyServer {
             ChannelFuture channelFuture = bootstrap.bind(port).sync();
             channelFuture.channel().closeFuture().sync();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.error("netty server start err, ", e);
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }
