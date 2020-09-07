@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
+import java.util.stream.Stream;
 
 @Configuration
 @ConditionalOnClass(SadProvider.class)
@@ -30,7 +31,12 @@ public class ServerAutoConfiguration {
         Map<String, Object> beans = applicationContext.getBeansWithAnnotation(SadProvider.class);
         if (!beans.isEmpty()) {
             log.info("server init");
-            beans.forEach(ServiceProvider::registry);
+            for (Object bean : beans.values()) {
+                String name = Stream.of(bean.getClass().getInterfaces()).findFirst().map(Class::getName).orElse(null);
+                if (name != null) {
+                    ServiceProvider.registry(name, bean);
+                }
+            }
             NettyServer server = new NettyServer(properties.getPort());
             server.start();
         }
